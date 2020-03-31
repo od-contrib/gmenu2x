@@ -23,7 +23,7 @@
 #include <dirent.h>
 #include <algorithm>
 #include <math.h>
-#include <filesystem>
+#include <experimental/filesystem>
 #include <fstream>
 #include <unistd.h>
 #include <cassert>
@@ -112,7 +112,7 @@ Menu::~Menu()
 void Menu::readSections(std::string const& parentDir)
 {
 	std::error_code ec;
-	for (const auto& entry : std::filesystem::directory_iterator(parentDir, ec))
+	for (const auto& entry : std::experimental::filesystem::directory_iterator(parentDir, ec))
 	{
 		const auto filename = entry.path().filename().string();
 		if (filename[0] != '.')
@@ -126,7 +126,7 @@ string Menu::createSectionDir(string const& sectionName)
 	string dir = GMenu2X::getHome() + "/sections/" + sectionName;
 
 	std::error_code ec;
-	if (!std::filesystem::create_directories(dir, ec) && ec.value()) {
+	if (!std::experimental::filesystem::create_directories(dir, ec) && ec.value()) {
 		WARNING("Failed to create parent sections dir: %d\n", ec.value());
 		return "";
 	}
@@ -511,7 +511,7 @@ void Menu::deleteSelectedSection()
 	string path = GMenu2X::getHome() + "/sections/" + sectionName;
 
 	std::error_code ec;
-	if (!std::filesystem::remove(path, ec) && ec) {
+	if (!std::experimental::filesystem::remove(path, ec) && ec) {
 		WARNING("Removal of section dir \"%s\" failed: %s\n",
 			path.c_str(), ec.message().c_str());
 	}

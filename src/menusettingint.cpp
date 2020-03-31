@@ -104,7 +104,7 @@ void MenuSettingInt::dec()
 
 void MenuSettingInt::setValue(int value)
 {
-	*_value = std::clamp(value,min,max);
+	*_value = stdx::clamp(value,min,max);
 	stringstream ss;
 	ss << *_value;
 	strvalue = "";

@@ -26,6 +26,7 @@
 #include <unordered_map>
 
 #include "inputmanager.h"
+#include "cpp_backports.h"
 
 using ConfStrHash = std::unordered_map<std::string, std::string>;
 using ConfIntHash = std::unordered_map<std::string, int>;

@@ -58,7 +58,7 @@ bool BrowseDialog::exec()
 
 	const int topBarHeight = gmenu2x.skinConfInt["topBarHeight"];
 	rowHeight = gmenu2x.font->getLineSpacing() + 1; // gp2x=15+1 / pandora=19+1
-	rowHeight = std::clamp(rowHeight, 20u, 40u);
+	rowHeight = stdx::clamp(rowHeight, 20u, 40u);
 	numRows = (gmenu2x.height() - topBarHeight - 20) / rowHeight;
 	clipRect = SDL_Rect{
 		0,

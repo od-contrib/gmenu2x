@@ -37,13 +37,13 @@ using namespace std;
 
 RGBAColor RGBAColor::fromString(const string &strColor) {
 	return {
-		uint8_t(std::clamp(std::stoi(strColor.substr(0, 2), nullptr, 16),
+		uint8_t(stdx::clamp(std::stoi(strColor.substr(0, 2), nullptr, 16),
 		                  0, 255)),
-		uint8_t(std::clamp(std::stoi(strColor.substr(2, 2).c_str(), nullptr, 16),
+		uint8_t(stdx::clamp(std::stoi(strColor.substr(2, 2).c_str(), nullptr, 16),
 		                  0, 255)),
-		uint8_t(std::clamp(std::stoi(strColor.substr(4, 2).c_str(), nullptr, 16),
+		uint8_t(stdx::clamp(std::stoi(strColor.substr(4, 2).c_str(), nullptr, 16),
 		                  0, 255)),
-		uint8_t(std::clamp(std::stoi(strColor.substr(6, 2).c_str(), nullptr, 16),
+		uint8_t(stdx::clamp(std::stoi(strColor.substr(6, 2).c_str(), nullptr, 16),
 		                  0, 255)),
 	};
 }

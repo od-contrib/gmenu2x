@@ -21,6 +21,8 @@
 #ifndef GMENU2X_H
 #define GMENU2X_H
 
+#include "cpp_backports.h"
+
 #include "buildopts.h"
 #include "contextmenu.h"
 #include "cpu.h"
