@@ -63,6 +63,9 @@ void Link::paint() {
 		0, 0
 	};
 
+	if (cachedFont != gmenu2x.font.get()) {
+		textSurface = gmenu2x.font->render(title);
+	}
 	textSurface->blit(s, coords, Font::HAlignCenter, Font::VAlignBottom);
 }
 
@@ -84,6 +87,9 @@ void Link::paintDescription(int center_x, int center_y)
 	};
 
 	if (descSurface != nullptr) {
+		if (cachedFont != gmenu2x.font.get()) {
+			descSurface = gmenu2x.font->render(description);
+		}
 		descSurface->blit(*gmenu2x.s, coords,
 				  Font::HAlignCenter, Font::VAlignBottom);
 	}
@@ -100,6 +106,7 @@ const string &Link::getTitle() const {
 
 void Link::setTitle(const string &title) {
 	textSurface = gmenu2x.font->render(title);
+	cachedFont = gmenu2x.font.get();
 
 	this->title = title;
 	edited = true;
@@ -111,6 +118,7 @@ const string &Link::getDescription() const {
 
 void Link::setDescription(const string &description) {
 	descSurface = gmenu2x.font->render(description);
+	cachedFont = gmenu2x.font.get();
 
 	this->description = description;
 	edited = true;

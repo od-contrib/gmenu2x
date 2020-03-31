@@ -27,6 +27,7 @@
 #include <functional>
 #include <string>
 
+class Font;
 class GMenu2X;
 class OffscreenSurface;
 
@@ -71,6 +72,9 @@ protected:
 	OffscreenSurface *iconSurface;
 	std::unique_ptr<OffscreenSurface> textSurface;
 	std::unique_ptr<OffscreenSurface> descSurface;
+
+	// Font used for pre-rendered text and desc surfaces.
+	const Font *cachedFont = nullptr;
 
 	virtual const std::string &searchIcon();
 	void setIconPath(const std::string &icon);
