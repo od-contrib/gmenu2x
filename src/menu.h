@@ -145,6 +145,10 @@ public:
 	bool moveSelectedLink(std::string const& newSection);
 
 	void skinUpdated();
+
+	// Called when the font but not when it is loaded for the first time.
+	void fontChanged();
+	
 	void orderLinks();
 
 	// Layer implementation:

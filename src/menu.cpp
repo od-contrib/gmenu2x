@@ -155,6 +155,8 @@ void Menu::skinUpdated() {
 	}
 }
 
+void Menu::fontChanged() { }
+
 void Menu::calcSectionRange(int &leftSection, int &rightSection) {
 	ConfIntHash &skinConfInt = gmenu2x.skinConfInt;
 	const int linkWidth = skinConfInt["linkWidth"];
