@@ -64,16 +64,17 @@ int Selector::exec(int startSelection) {
 	writeSubTitle(bg, link.getDescription());
 
 	int x = 5;
+	int y = gmenu2x.height() - gmenu2x.skinConfInt["bottomBarHeight"] / 2;
 	if (fl.size() != 0) {
-		x = gmenu2x.drawButton(bg, "accept", gmenu2x.tr["Select"], x);
+		x = gmenu2x.drawButton(bg, "accept", gmenu2x.tr["Select"], x, y);
 	}
 	if (showDirectories) {
-		x = gmenu2x.drawButton(bg, "left", "", x);
-		x = gmenu2x.drawButton(bg, "cancel", gmenu2x.tr["Up one folder"], x);
+		x = gmenu2x.drawButton(bg, "left", "", x, y);
+		x = gmenu2x.drawButton(bg, "cancel", gmenu2x.tr["Up one folder"], x, y);
 	} else {
-		x = gmenu2x.drawButton(bg, "cancel", "", x);
+		x = gmenu2x.drawButton(bg, "cancel", "", x, y);
 	}
-	x = gmenu2x.drawButton(bg, "start", gmenu2x.tr["Exit"], x);
+	x = gmenu2x.drawButton(bg, "start", gmenu2x.tr["Exit"], x, y);
 	(void)x;
 
 	unsigned int top, height;
@@ -124,10 +125,10 @@ int Selector::exec(int startSelection) {
 			//Selection
 			int iY = top + (selected - firstElement) * lineHeight;
 			if (selected<fl.size())
-				s.box(1, iY, 309, lineHeight, gmenu2x.skinConfColors[COLOR_SELECTION_BG]);
+				s.box(1, iY, gmenu2x.width() - 11, lineHeight, gmenu2x.skinConfColors[COLOR_SELECTION_BG]);
 
 			//Files & Dirs
-			s.setClipRect(0, top, 311, height);
+			s.setClipRect(0, top, s.width() - 9, height);
 			for (unsigned int i = firstElement;
 					i < fl.size() && i < firstElement + nb_elements; i++) {
 				iY = top + (i - firstElement) * lineHeight;

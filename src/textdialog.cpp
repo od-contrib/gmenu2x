@@ -72,10 +72,11 @@ void TextDialog::exec() {
 	writeSubTitle(bg, description);
 
 	int x = 5;
-	x = gmenu2x.drawButton(bg, "up", "", x);
-	x = gmenu2x.drawButton(bg, "down", gmenu2x.tr["Scroll"], x);
-	x = gmenu2x.drawButton(bg, "cancel", "", x);
-	x = gmenu2x.drawButton(bg, "start", gmenu2x.tr["Exit"], x);
+    int y = gmenu2x.height() - gmenu2x.skinConfInt["bottomBarHeight"] / 2;
+	x = gmenu2x.drawButton(bg, "up", "", x, y);
+	x = gmenu2x.drawButton(bg, "down", gmenu2x.tr["Scroll"], x, y);
+	x = gmenu2x.drawButton(bg, "cancel", "", x, y);
+	x = gmenu2x.drawButton(bg, "start", gmenu2x.tr["Exit"], x, y);
 	(void)x;
 
 	bg.convertToDisplayFormat();

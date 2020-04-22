@@ -387,7 +387,7 @@ void LinkApp::drawLaunch(Surface& s) {
 	else
 		gmenu2x.sc["icons/generic.png"]->blit(gmenu2x.s,x,104);*/
 	if (iconSurface) {
-		iconSurface->blit(s, x, gmenu2x.height() / 2 - 16);
+		iconSurface->blit(s, x, gmenu2x.height() / 2 - iconSurface->height() / 2);
 	}
 	gmenu2x.font->write(s, text, x + 42, gmenu2x.height() / 2 + 1,
 			    Font::HAlignLeft, Font::VAlignMiddle);
@@ -468,10 +468,11 @@ void LinkApp::showManual() {
 
 				gmenu2x.drawBottomBar(s);
 				int x = 5;
-				x = gmenu2x.drawButton(s, "left", "", x);
-				x = gmenu2x.drawButton(s, "right", gmenu2x.tr["Change page"], x);
-				x = gmenu2x.drawButton(s, "cancel", "", x);
-				x = gmenu2x.drawButton(s, "start", gmenu2x.tr["Exit"], x);
+				int y = gmenu2x.height() - gmenu2x.skinConfInt["bottomBarHeight"] / 2;
+				x = gmenu2x.drawButton(s, "left", "", x, y);
+				x = gmenu2x.drawButton(s, "right", gmenu2x.tr["Change page"], x, y);
+				x = gmenu2x.drawButton(s, "cancel", "", x, y);
+				x = gmenu2x.drawButton(s, "start", gmenu2x.tr["Exit"], x, y);
 				(void)x;
 
 				ss.clear();

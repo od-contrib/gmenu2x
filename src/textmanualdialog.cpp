@@ -80,12 +80,13 @@ void TextManualDialog::exec() {
 	writeTitle(bg, title+(description.empty() ? "" : ": "+description));
 
 	int x = 5;
-	x = gmenu2x.drawButton(bg, "up", "", x);
-	x = gmenu2x.drawButton(bg, "down", gmenu2x.tr["Scroll"], x);
-	x = gmenu2x.drawButton(bg, "left", "", x);
-	x = gmenu2x.drawButton(bg, "right", gmenu2x.tr["Change page"], x);
-	x = gmenu2x.drawButton(bg, "cancel", "", x);
-	x = gmenu2x.drawButton(bg, "start", gmenu2x.tr["Exit"], x);
+    int y = gmenu2x.height() - gmenu2x.skinConfInt["bottomBarHeight"] / 2;
+	x = gmenu2x.drawButton(bg, "up", "", x, y);
+	x = gmenu2x.drawButton(bg, "down", gmenu2x.tr["Scroll"], x, y);
+	x = gmenu2x.drawButton(bg, "left", "", x, y);
+	x = gmenu2x.drawButton(bg, "right", gmenu2x.tr["Change page"], x, y);
+	x = gmenu2x.drawButton(bg, "cancel", "", x, y);
+	x = gmenu2x.drawButton(bg, "start", gmenu2x.tr["Exit"], x, y);
 	(void)x;
 
 	bg.convertToDisplayFormat();
@@ -116,7 +117,7 @@ void TextManualDialog::exec() {
 		ss << page+1;
 		ss >> pageStatus;
 		pageStatus = gmenu2x.tr["Page"]+": "+pageStatus+"/"+spagecount;
-		gmenu2x.font->write(s, pageStatus, 310, 230, Font::HAlignRight, Font::VAlignMiddle);
+		gmenu2x.font->write(s, pageStatus, gmenu2x.width() * .97, gmenu2x.height() - gmenu2x.skinConfInt["bottomBarHeight"] / 2, Font::HAlignRight, Font::VAlignMiddle);
 
 		s.flip();
 
