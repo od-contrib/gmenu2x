@@ -20,13 +20,13 @@ void Background::paint(Surface& s) {
 
 #ifdef ENABLE_CLOCK
 	font.write(s, clock.getTime(),
-			s.width() / 2, gmenu2x.bottomBarTextY,
+			s.width() / 2, s.height() - gmenu2x.skinConfInt["bottomBarHeight"] / 2,
 			Font::HAlignCenter, Font::VAlignMiddle);
 #endif
 
 	auto icon = battery.getIcon();
 	if (icon) {
-		icon->blit(s, s.width() - 19, gmenu2x.bottomBarIconY);
+		icon->blit(s, s.width() - (icon->width() * 1.2 ), s.height() - (gmenu2x.skinConfInt["bottomBarHeight"] + icon->height()) / 2);
 	}
 }
 

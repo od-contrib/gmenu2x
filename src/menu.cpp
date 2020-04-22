@@ -103,8 +103,7 @@ Menu::Menu(GMenu2X& gmenu2x)
 #endif
 
 	btnContextMenu.setPosition(gmenu2x.width() - 38,
-				   gmenu2x.bottomBarIconY);
-
+				   gmenu2x.height() - gmenu2x.skinConfInt["bottomBarHeight"] / 2);
 	updateSectionTextSurfaces();
 }
 
@@ -287,13 +286,13 @@ void Menu::paint(Surface &s) {
 	if (linkApp && linkApp->isEditable()) {
 #ifdef ENABLE_CPUFREQ
 		font.write(s, gmenu2x.cpu.freqStr(linkApp->clock()),
-				gmenu2x.cpuX, gmenu2x.bottomBarTextY,
+				gmenu2x.cpuX, gmenu2x.height() - bottomBarHeight / 2,
 				Font::HAlignLeft, Font::VAlignMiddle);
 #endif
 		//Manual indicator
 		if (!linkApp->getManual().empty())
-			sc.skinRes("imgs/manual.png")->blit(
-					s, gmenu2x.manualX, gmenu2x.bottomBarIconY);
+			auto manual_img = sc.skinRes("imgs/manual.png");
+			manual_img->blit(s, gmenu2x.manualX, gmenu2x.height() - (bottomBarHeight / 2 + manual_img->height() / 2));
 	}
 }
 

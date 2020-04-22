@@ -240,9 +240,6 @@ GMenu2X::GMenu2X() : input(*this), sc(this)
 	brightnessmanager = std::make_unique<BrightnessManager>(this);
 	confInt["brightnessLevel"] = brightnessmanager->currentBrightness();
 
-	bottomBarIconY = height() - 18;
-	bottomBarTextY = height() - 10;
-
 	if (!fileExists(confStr["wallpaper"])) {
 		DEBUG("No wallpaper defined; we will take the default one.\n");
 		confStr["wallpaper"] = getSystemSkinPath("Default")
@@ -298,46 +295,67 @@ void GMenu2X::initBG() {
 
 	bgmain.reset(new OffscreenSurface(*bg));
 
+    unsigned int bottomBarElementX = 0; 
+    
 	{
 		auto sd = OffscreenSurface::loadImage(
 				sc.getSkinFilePath("imgs/sd.png"));
-		if (sd) sd->blit(*bgmain, 3, bottomBarIconY);
+		if (sd) {
+            bottomBarElementX = sd->width() * .2;
+            sd->blit(*bgmain, bottomBarElementX,  height() - (skinConfInt["bottomBarHeight"] + sd->height()) / 2);
+            bottomBarElementX += sd->width() * 1.1;
+        }
 	}
 
-	cpuX = 32 + font->write(*bgmain, getDiskFree(getHome().c_str()),
-			22, bottomBarTextY, Font::HAlignLeft, Font::VAlignMiddle);
+	bottomBarElementX += font->write(*bgmain, 
+                                    getDiskFree(getHome().c_str()),
+                                    bottomBarElementX, 
+                                    height() - skinConfInt["bottomBarHeight"] / 2, 
+                                    Font::HAlignLeft, 
+                                    Font::VAlignMiddle) * 1.15;
 
 #ifdef ENABLE_CPUFREQ
 	{
 		auto cpu_img = OffscreenSurface::loadImage(
 				sc.getSkinFilePath("imgs/cpu.png"));
-		if (cpu_img) cpu_img->blit(*bgmain, cpuX, bottomBarIconY);
+		if (cpu_img) {
+            cpu_img->blit(*bgmain, bottomBarElementX, height() - (skinConfInt["bottomBarHeight"] + cpu_img->height()) / 2);
+            bottomBarElementX += cpu_img->width() * 1.1;
+        }
 	}
-	cpuX += 19;
-	manualX = cpuX + font->getTextWidth("300MHz") + 5;
-#else
-	manualX = cpuX;
+	cpuX = bottomBarElementX;
+    bottomBarElementX += font->getTextWidth("1000MHz") * 1.15;
 #endif
-
-	int serviceX = width() - 38;
+    manualX = bottomBarElementX;
+    
+	int serviceX = width();
 	if (usbnet) {
 		if (web) {
 			auto webserver = OffscreenSurface::loadImage(
 					sc.getSkinFilePath("imgs/webserver.png"));
-			if (webserver) webserver->blit(*bgmain, serviceX, bottomBarIconY);
-			serviceX -= 19;
+			if (webserver) {
+                serviceX -= webserver->width() * .2;
+                webserver->blit(*bgmain, serviceX, height() - (skinConfInt["bottomBarHeight"] + webserver->height()) / 2);
+                serviceX -= webserver->width() * 1.15;
+            }
 		}
 		if (samba) {
 			auto sambaS = OffscreenSurface::loadImage(
 					sc.getSkinFilePath("imgs/samba.png"));
-			if (sambaS) sambaS->blit(*bgmain, serviceX, bottomBarIconY);
-			serviceX -= 19;
+			if (sambaS) {
+                serviceX -= sambaS->width() * .2;
+                sambaS->blit(*bgmain, serviceX, height() - (skinConfInt["bottomBarHeight"] + sambaS->height()) / 2);
+                serviceX -= sambaS->width() * 1.15;
+            }
 		}
 		if (inet) {
 			auto inetS = OffscreenSurface::loadImage(
 					sc.getSkinFilePath("imgs/inet.png"));
-			if (inetS) inetS->blit(*bgmain, serviceX, bottomBarIconY);
-			serviceX -= 19;
+			if (inetS) {
+                serviceX -= inetS->width() * .2;
+                inetS->blit(*bgmain, serviceX, height() - (skinConfInt["bottomBarHeight"] + inetS->height()) / 2);
+                serviceX -= inetS->width() * 1.15;
+            }
 		}
 	}
 	(void)serviceX;
