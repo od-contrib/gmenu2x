@@ -24,6 +24,7 @@
 #include "dialog.h"
 
 #include <string>
+#include <vector>
 
 class WallpaperDialog : protected Dialog {
 private:
