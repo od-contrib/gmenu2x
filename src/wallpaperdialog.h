@@ -26,8 +26,15 @@
 #include <string>
 
 class WallpaperDialog : protected Dialog {
+private:
+    std::vector<std::string> wallpapers;
+    std::string text, icon;
+
 public:
-	WallpaperDialog(GMenu2X& gmenu2x);
+	WallpaperDialog(GMenu2X& gmenu2x,
+                    const std::string &text, 
+                    const std::vector<std::string> &wallpapers,
+                    const std::string &icon = "skin:icons/wallpaper.png");
 	std::string wallpaper;
 
 	bool exec();

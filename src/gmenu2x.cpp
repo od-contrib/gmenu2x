@@ -855,7 +855,27 @@ void GMenu2X::showContextMenu() {
 }
 
 void GMenu2X::changeWallpaper() {
-	WallpaperDialog wp(*this);
+    FileLister fl;
+	fl.setShowDirectories(false);
+	fl.setFilter("png");
+
+	fl.browse(getLocalSkinPath(confStr["skin"])
+		  + "/wallpapers", true);
+	fl.browse(getSystemSkinPath(confStr["skin"])
+		  + "/wallpapers", false);
+
+	if (confStr["skin"] != "Default") {
+		fl.browse(getLocalSkinPath("Default")
+			  + "/wallpapers", false);
+		fl.browse(getSystemSkinPath("Default")
+			  + "/wallpapers", false);
+	}
+
+	vector<string> wallpapers = fl.getFiles();
+
+	DEBUG("Wallpapers: %zd\n", wallpapers.size());
+    
+	WallpaperDialog wp(*this, tr["Wallpaper selection"], wallpapers);
 	if (wp.exec() && confStr["wallpaper"] != wp.wallpaper) {
 		confStr["wallpaper"] = wp.wallpaper;
 		initBG();

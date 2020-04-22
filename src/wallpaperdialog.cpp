@@ -32,35 +32,26 @@
 
 using namespace std;
 
-WallpaperDialog::WallpaperDialog(GMenu2X& gmenu2x)
+WallpaperDialog::WallpaperDialog(GMenu2X& gmenu2x, 
+                                 const string &text_,
+                                 const vector<string> &wallpapers_, 
+                                 const string &icon)
 	: Dialog(gmenu2x)
+    , text(text_)
+    , wallpapers(wallpapers_)
 {
+    if (!icon.empty()) {
+		this->icon = icon;
+	} else {
+		this->icon = "icons/generic.png";
+	}
 }
 
-bool WallpaperDialog::exec()
-{
+bool WallpaperDialog::exec() {
+    OffscreenSurface bg(*gmenu2x.bg);
+   	bg.convertToDisplayFormat();
+
 	bool close = false, result = true;
-
-	FileLister fl;
-	fl.setShowDirectories(false);
-	fl.setFilter("png");
-
-	fl.browse(gmenu2x.getLocalSkinPath(gmenu2x.confStr["skin"])
-		  + "/wallpapers", true);
-	fl.browse(gmenu2x.getSystemSkinPath(gmenu2x.confStr["skin"])
-		  + "/wallpapers", false);
-
-	if (gmenu2x.confStr["skin"] != "Default") {
-		fl.browse(gmenu2x.getLocalSkinPath("Default")
-			  + "/wallpapers", false);
-		fl.browse(gmenu2x.getSystemSkinPath("Default")
-			  + "/wallpapers", false);
-	}
-
-	vector<string> wallpapers = fl.getFiles();
-
-	DEBUG("Wallpapers: %zd\n", wallpapers.size());
-
 	uint32_t i, selected = 0, firstElement = 0, iY;
 
 	ButtonBox buttonbox;
@@ -75,15 +66,16 @@ bool WallpaperDialog::exec()
 
 	while (!close) {
 		OutputSurface& s = *gmenu2x.s;
-
+        bg.blit(s, 0, 0);
+        
+        drawTitleIcon(s, icon);
+        writeTitle(s, text);
+        writeSubTitle(s, gmenu2x.tr["Select a wallpaper from the list"]);
+        
 		if (selected > firstElement + nb_elements - 1)
 			firstElement = selected - nb_elements + 1;
 		if (selected < firstElement)
 			firstElement = selected;
-
-		drawTitleIcon(s, "icons/wallpaper.png", true);
-		writeTitle(s, gmenu2x.tr["Wallpaper selection"]);
-		writeSubTitle(s, gmenu2x.tr["Select a wallpaper from the list"]);
 
 		buttonbox.paint(s, 5, gmenu2x.height() - gmenu2x.skinConfInt["bottomBarHeight"] / 2);
 
