@@ -75,7 +75,7 @@ void Link::paint() {
 		iconSurface->blit(s, iconX, rect.y+padding, iconSurface->width(), iconSurface->height());
         x += iconSurface->width() / 2;
 	} else
-        x += 16
+        x += 16;
 
 	SDL_Rect coords = {
 		static_cast<Sint16>(x),
