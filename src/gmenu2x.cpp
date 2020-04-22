@@ -1016,14 +1016,13 @@ int GMenu2X::drawButton(Surface& surface, const string &btn,
 	int w = 0;
 	auto icon = sc["skin:imgs/buttons/" + btn + ".png"];
 	if (icon) {
-		if (y < 0) y = height() + y;
+		if (y < 0) y += height();
 		w = icon->width();
-		icon->blit(surface, x, y - 7);
+		icon->blit(surface, x, y - icon->height() / 2);
 		if (!text.empty()) {
-			w += 3;
+			w *= 1.1;
 			w += font->write(surface, text, x + w, y,
-					 Font::HAlignLeft, Font::VAlignMiddle);
-			w += 6;
+					 Font::HAlignLeft, Font::VAlignMiddle) * 1.15;
 		}
 	}
 	return x + w;
@@ -1036,12 +1035,12 @@ int GMenu2X::drawButtonRight(Surface& surface, const string &btn,
 	if (icon) {
 		if (y < 0) y = height() + y;
 		w = icon->width();
-		icon->blit(surface, x - w, y - 7);
+        y -= icon->height() / 2;
+		icon->blit(surface, x - w, y);
 		if (!text.empty()) {
-			w += 3;
+			w *= 1.1;
 			w += font->write(surface, text, x - w, y,
-					 Font::HAlignRight, Font::VAlignMiddle);
-			w += 6;
+					 Font::HAlignRight, Font::VAlignMiddle) * 1.15;
 		}
 	}
 	return x - w;
