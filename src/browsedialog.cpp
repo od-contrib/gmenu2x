@@ -255,8 +255,9 @@ void BrowseDialog::paint()
 		} else {
 			icon = iconFile;
 		}
-		icon->blit(s, 5, offsetY);
-		gmenu2x.font->write(s, fl[i], icon->width() * 1.2, offsetY + rowHeight / 2,
+		int x = 5;
+		icon->blit(s, x, offsetY);
+		gmenu2x.font->write(s, fl[i], x + icon->width() * 1.2, offsetY + rowHeight / 2,
 				Font::HAlignLeft, Font::VAlignMiddle);
 
 		offsetY += rowHeight;

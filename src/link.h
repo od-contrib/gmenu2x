@@ -88,7 +88,7 @@ private:
 	SDL_Rect rect;
 	uint32_t iconX, padding;
 	int lastTick;
-	std::string title, description;
+	std::string title, shorttitle, description;
 };
 
 #endif

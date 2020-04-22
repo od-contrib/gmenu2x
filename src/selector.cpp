@@ -132,12 +132,12 @@ int Selector::exec(int startSelection) {
 			for (unsigned int i = firstElement;
 					i < fl.size() && i < firstElement + nb_elements; i++) {
 				iY = top + (i - firstElement) * lineHeight;
-				x = 4;
+				x = 5;
 				if (fl.isDirectory(i)) {
 					if (folderIcon) {
 						folderIcon->blit(s,
 								x, iY + (lineHeight - folderIcon->height()) / 2);
-						x += folderIcon->width() + 2;
+						x += folderIcon->width() * 1.2;
 					}
 					gmenu2x.font->write(s, fl[i],
 							x, iY + lineHeight / 2,
