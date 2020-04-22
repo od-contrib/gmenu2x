@@ -81,25 +81,19 @@ bool WallpaperDialog::exec()
 		if (selected < firstElement)
 			firstElement = selected;
 
-		//Wallpaper
-		gmenu2x.sc[((string)"skin:wallpapers/" + wallpapers[selected]).c_str()]->blit(s, 0, 0);
-
-		gmenu2x.drawTopBar(s);
-		gmenu2x.drawBottomBar(s);
-
 		drawTitleIcon(s, "icons/wallpaper.png", true);
 		writeTitle(s, gmenu2x.tr["Wallpaper selection"]);
 		writeSubTitle(s, gmenu2x.tr["Select a wallpaper from the list"]);
 
-		buttonbox.paint(s, 5, gmenu2x.height() - 1);
+		buttonbox.paint(s, 5, gmenu2x.height() - gmenu2x.skinConfInt["bottomBarHeight"] / 2);
 
 		//Selection
 		iY = selected - firstElement;
 		iY = top + (iY * fontheight);
-		s.box(2, iY, 308, fontheight, gmenu2x.skinConfColors[COLOR_SELECTION_BG]);
+		s.box(2, iY, gmenu2x.width() - 12, fontheight, gmenu2x.skinConfColors[COLOR_SELECTION_BG]);
 
 		//Files & Directories
-		s.setClipRect(0, top, 311, height);
+		s.setClipRect(0, top, gmenu2x.width() - 9, height);
 		for (i = firstElement; i < wallpapers.size()
 					&& i < firstElement + nb_elements; i++) {
 			iY = i-firstElement;
