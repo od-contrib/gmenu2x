@@ -41,12 +41,12 @@ endif ()
 
 set(CARD_ROOT "/media" CACHE STRING "Top-level filesystem directory")
 
-set(PLATFORMS "pc, a320, gcw0, nanonote, rs90")
+set(PLATFORMS "pc, a320, gcw0, rg350m, nanonote, rs90")
 
 set(PLATFORM "pc" CACHE STRING
 	"One of the available platforms: ${PLATFORMS}"
 )
-set_property(CACHE PLATFORM PROPERTY STRINGS pc a320 gcw0 nanonote rs90)
+set_property(CACHE PLATFORM PROPERTY STRINGS pc a320 gcw0 rg350m nanonote rs90)
 
 find_package(SDL REQUIRED)
 find_package(SDL_ttf REQUIRED)
