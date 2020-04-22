@@ -141,7 +141,7 @@ void Menu::skinUpdated() {
 
 	//recalculate some coordinates based on the new element sizes
 	linkColumns = (gmenu2x.width() - 10) / skinConfInt["linkWidth"];
-	linkRows = (gmenu2x.height() - 35 - skinConfInt["topBarHeight"])
+	linkRows = (gmenu2x.height() - gmenu2x.skinConfInt["bottomBarHeight"] - gmenu2x.skinConfInt["topBarHeight"])
 		 / skinConfInt["linkHeight"];
 
 	//reload section icons
@@ -197,8 +197,8 @@ void Menu::paint(Surface &s) {
 	SurfaceCollection &sc = gmenu2x.sc;
 
 	ConfIntHash &skinConfInt = gmenu2x.skinConfInt;
-	const int topBarHeight = skinConfInt["topBarHeight"];
-	const int bottomBarHeight = skinConfInt["bottomBarHeight"];
+	const int topBarHeight = gmenu2x.skinConfInt["topBarHeight"];
+	const int bottomBarHeight = gmenu2x.skinConfInt["bottomBarHeight"];
 	const int linkWidth = skinConfInt["linkWidth"];
 	const int linkHeight = skinConfInt["linkHeight"];
 	RGBAColor &selectionBgColor = gmenu2x.skinConfColors[COLOR_SELECTION_BG];
@@ -251,7 +251,7 @@ void Menu::paint(Surface &s) {
 			l_button->blit(s, 0, 0);
 		auto r_button = sc.skinRes("imgs/section-r.png");
 		if (r_button)
-			r_button->blit(s, width - 10, 0);
+			r_button->blit(s, width - r_button->width(), 0);
 	}
 
 	auto& sectionLinks = links[iSection];
@@ -265,7 +265,7 @@ void Menu::paint(Surface &s) {
 	const int linkMarginX = (
 			width - linkWidth * linkColumns - linkSpacingX * (linkColumns - 1)
 			) / 2;
-	const int linkSpacingY = (height - 35 - topBarHeight - linkRows * linkHeight) / linkRows;
+	const int linkSpacingY = (height - bottomBarHeight - topBarHeight - linkRows * linkHeight) / linkRows;
 	for (uint32_t i = iFirstDispRow * linkColumns; i < iFirstDispRow * linkColumns + linksPerPage && i < numLinks; i++) {
 		const int ir = i - iFirstDispRow * linkColumns;
 		const int x = linkMarginX + (ir % linkColumns) * (linkWidth + linkSpacingX);
@@ -290,9 +290,10 @@ void Menu::paint(Surface &s) {
 				Font::HAlignLeft, Font::VAlignMiddle);
 #endif
 		//Manual indicator
-		if (!linkApp->getManual().empty())
-			auto manual_img = sc.skinRes("imgs/manual.png");
+		if (!linkApp->getManual().empty()) {
+            auto manual_img = sc.skinRes("imgs/manual.png");
 			manual_img->blit(s, gmenu2x.manualX, gmenu2x.height() - (bottomBarHeight / 2 + manual_img->height() / 2));
+        }
 	}
 }
 
@@ -448,7 +449,7 @@ bool Menu::addLink(string const& path, string const& file)
 
 	string shorttitle=title, description="", exec=dirPath+file, icon="";
 	if (fileExists(exename+".png")) icon = exename+".png";
-
+    
 	//Reduce title lenght to fit the link width
 	if (gmenu2x.font->getTextWidth(shorttitle)>gmenu2x.skinConfInt["linkWidth"]) {
 		while (gmenu2x.font->getTextWidth(shorttitle+"..")>gmenu2x.skinConfInt["linkWidth"])
