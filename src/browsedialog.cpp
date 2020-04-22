@@ -58,14 +58,15 @@ bool BrowseDialog::exec()
 		setPath(GMENU2X_CARD_ROOT);
 
 	const int topBarHeight = gmenu2x.skinConfInt["topBarHeight"];
+    const int bottomBarHeight = gmenu2x.skinConfInt["bottomBarHeight"];
 	rowHeight = gmenu2x.font->getLineSpacing() + 1; // gp2x=15+1 / pandora=19+1
 	rowHeight = compat::clamp(rowHeight, 20u, 40u);
-	numRows = (gmenu2x.height() - topBarHeight - 20) / rowHeight;
+	numRows = (gmenu2x.height() - topBarHeight - bottomBarHeight) / rowHeight;
 	clipRect = SDL_Rect{
 		0,
 		static_cast<Sint16>(topBarHeight + 1),
 		static_cast<Uint16>(gmenu2x.width() - 9),
-		static_cast<Uint16>(gmenu2x.height() - topBarHeight - 25)
+		static_cast<Uint16>(gmenu2x.height() - topBarHeight - bottomBarHeight)
 	};
 
 	selected = 0;
@@ -215,7 +216,7 @@ void BrowseDialog::paint()
 	drawTitleIcon(bg, "icons/explorer.png", true);
 	writeTitle(bg, title);
 	writeSubTitle(bg, subtitle);
-	buttonBox.paint(bg, 5, gmenu2x.height() - 1);
+	buttonBox.paint(bg, 5, gmenu2x.height() - gmenu2x.skinConfInt["bottomBarHeight"] / 2);
 
 	bg.convertToDisplayFormat();
 	bg.blit(s, 0, 0);
@@ -255,7 +256,7 @@ void BrowseDialog::paint()
 			icon = iconFile;
 		}
 		icon->blit(s, 5, offsetY);
-		gmenu2x.font->write(s, fl[i], 24, offsetY + rowHeight / 2,
+		gmenu2x.font->write(s, fl[i], icon->width() * 1.2, offsetY + rowHeight / 2,
 				Font::HAlignLeft, Font::VAlignMiddle);
 
 		offsetY += rowHeight;

@@ -32,8 +32,6 @@ using std::string;
 using std::stringstream;
 using std::unique_ptr;
 
-constexpr unsigned int COMPONENT_WIDTH = 28;
-
 MenuSettingRGBA::MenuSettingRGBA(
 		GMenu2X& gmenu2x,
 		const string &name, const string &description, RGBAColor *value)
@@ -60,10 +58,11 @@ void MenuSettingRGBA::draw(int valueX, int y, int h) {
 	s.rectangle(valueX + 1, y + 2, h - 4, h - 4, 255,255,255,255);
 	s.box(valueX + 2, y + 3, h - 6, h - 6, value());
 	auto& font = gmenu2x.font;
-	font->write(s, strR, valueX + h + COMPONENT_WIDTH - 2, y, Font::HAlignRight, Font::VAlignTop);
-	font->write(s, strG, valueX + h + COMPONENT_WIDTH * 2 - 2, y, Font::HAlignRight, Font::VAlignTop);
-	font->write(s, strB, valueX + h + COMPONENT_WIDTH * 3 - 2, y, Font::HAlignRight, Font::VAlignTop);
-	font->write(s, strA, valueX + h + COMPONENT_WIDTH * 4 - 2, y, Font::HAlignRight, Font::VAlignTop);
+	int fontpadding = font->getTextWidth("255")*1.1;
+	font->write(s, strR, valueX + h + fontpadding - 2, y, Font::HAlignRight, Font::VAlignTop);
+	font->write(s, strG, valueX + h + fontpadding * 2 - 2, y, Font::HAlignRight, Font::VAlignTop);
+	font->write(s, strB, valueX + h + fontpadding * 3 - 2, y, Font::HAlignRight, Font::VAlignTop);
+	font->write(s, strA, valueX + h + fontpadding * 4 - 2, y, Font::HAlignRight, Font::VAlignTop);
 }
 
 bool MenuSettingRGBA::handleButtonPress(InputManager::Button button)
@@ -194,7 +193,9 @@ unsigned short MenuSettingRGBA::getSelPart()
 
 void MenuSettingRGBA::drawSelected(int valueX, int y, int h)
 {
-	int x = valueX + selPart * COMPONENT_WIDTH;
+    auto& font = gmenu2x.font;
+    int fontpadding = font->getTextWidth("255")*1.1;
+	int x = valueX + selPart * fontpadding;
 	RGBAColor color;
 	switch (selPart) {
 		default: /* fallthrough */
@@ -203,7 +204,7 @@ void MenuSettingRGBA::drawSelected(int valueX, int y, int h)
 		case 2: color = RGBAColor(  0,   0, 255, 255); break;
 		case 3: color = RGBAColor(128, 128, 128, 255); break;
 	}
-	gmenu2x.s->box( x + h, y, COMPONENT_WIDTH, h, color );
+	gmenu2x.s->box( x + h, y, fontpadding, h, color );
 
 	MenuSetting::drawSelected(valueX, y, h);
 }

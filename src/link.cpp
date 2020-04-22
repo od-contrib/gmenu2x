@@ -70,12 +70,15 @@ void Link::updateDescriptionSurface() {
 void Link::paint() {
 	Surface& s = *gmenu2x.s;
 
+    int x = iconX;
 	if (iconSurface) {
-		iconSurface->blit(s, iconX, rect.y+padding, 32,32);
-	}
+		iconSurface->blit(s, iconX, rect.y+padding, iconSurface->width(), iconSurface->height());
+        x += iconSurface->width() / 2;
+	} else
+        x += 16
 
 	SDL_Rect coords = {
-		static_cast<Sint16>(iconX + 16),
+		static_cast<Sint16>(x),
 		static_cast<Sint16>(rect.y + gmenu2x.skinConfInt["linkHeight"] - padding),
 		0, 0
 	};

@@ -20,8 +20,9 @@ void ButtonBox::paint(Surface& s, int x, int y)
 {
 	for (auto& button : buttons) {
 		auto rect = button->getRect();
-		button->setPosition(x, y - rect.h);
+		button->setPosition(x, y - rect.h / 2);
 		button->paint(s);
-		x += button->getRect().w + 6;
+        //space 20% of current button between next button
+		x += button->getRect().w * 1.20;
 	}
 }

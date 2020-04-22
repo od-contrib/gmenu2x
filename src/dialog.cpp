@@ -22,8 +22,7 @@ void Dialog::drawTitleIcon(Surface& s, const std::string &icon, bool skinRes)
 	if (i==NULL)
 		i = gmenu2x.sc.skinRes("icons/generic.png");
 
-	i->blit(s, 4, (gmenu2x.skinConfInt["topBarHeight"] - 32) / 2);
-}
+i->blit(s, i->width() * .2, (gmenu2x.skinConfInt["topBarHeight"] - i->height()) / 2);}
 
 void Dialog::writeTitle(Surface& s, const std::string &title)
 {
