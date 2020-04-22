@@ -53,6 +53,7 @@ public:
 	void setPosition(int x, int y);
 
 	const std::string &getTitle() const;
+    const std::string &getShortTitle() const;
 	void setTitle(const std::string &title);
 	const std::string &getDescription() const;
 	void setDescription(const std::string &description);

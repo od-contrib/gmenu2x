@@ -52,8 +52,8 @@ void Link::updateTextSurfaces() {
 }
 
 void Link::updateTitleSurface() {
-	if (!title.empty()) {
-		titleSurface = gmenu2x.font->render(title);
+	if (!shorttitle.empty()) {
+		titleSurface = gmenu2x.font->render(shorttitle);
 	} else {
 		titleSurface = nullptr;
 	}
@@ -118,7 +118,20 @@ const string &Link::getTitle() const {
 	return title;
 }
 
+const string &Link::getShortTitle() const {
+	return shorttitle;
+}
+
 void Link::setTitle(const string &title) {
+	std::string shorttitle = title;
+	const int max_width = gmenu2x.skinConfInt["linkWidth"];
+	if (gmenu2x.font->getTextWidth(shorttitle) > max_width) {
+		while (gmenu2x.font->getTextWidth(shorttitle + "..") > max_width)
+			shorttitle = shorttitle.substr(0, shorttitle.length() - 1);
+		shorttitle += "..";
+	}
+
+	this->shorttitle = std::move(shorttitle);
 	this->title = title;
 	updateTitleSurface();
 	edited = true;

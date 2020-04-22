@@ -60,7 +60,7 @@ int Selector::exec(int startSelection) {
 
 	OffscreenSurface bg(*gmenu2x.bg);
 	drawTitleIcon(bg, link.getIconPath(), true);
-	writeTitle(bg, link.getTitle());
+	writeTitle(bg, link.getShortTitle());
 	writeSubTitle(bg, link.getDescription());
 
 	int x = 5;
