@@ -63,10 +63,10 @@ void Menu::Animation::step()
 	if (curr == 0) {
 		ERROR("Computing step past animation end\n");
 	} else if (curr < 0) {
-		const int v = ((1 << 16) - curr) / 32;
+		const int v = ((1 << 16) - curr) / 16;
 		curr = std::min(0, curr + v);
 	} else {
-		const int v = ((1 << 16) + curr) / 32;
+		const int v = ((1 << 16) + curr) / 16;
 		curr = std::max(0, curr - v);
 	}
 }
